@@ -74,6 +74,8 @@ module Data.List
   , partition
 
   , nubByAdjacentReverse
+  , addIndexReverse
+  , mapReverse
   , nubBySafe
 
   , nub
