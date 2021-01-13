@@ -73,6 +73,9 @@ module Data.List
   , groupAllBy
   , partition
 
+  , nubByAdjacentReverse
+  , nubBySafe
+
   , nub
   , nubBy
   , nubEq
@@ -698,6 +701,23 @@ nubBy p =
     -- Add indices so we can recover original order after deduplicating.
     <<< addIndexReverse
 
+-- Same as nubBy, but eliminates nubByAdjacentReverse.
+-- This is just for exploring stack safety.
+-- It doesn't actually remove duplicates.
+nubBySafe :: forall a. (a -> a -> Ordering) -> List a -> List a
+nubBySafe p =
+  -- Discard indices, just keep original values.
+  mapReverse snd
+    -- Sort by index to recover original order.
+    -- Use `flip` to sort in reverse order in anticipation of final `mapReverse`.
+    <<< sortBy (flip compare `on` fst)
+    -- Removing neighboring duplicates.
+    -- <<< nubByAdjacentReverse (\a b -> (p `on` snd) a b == EQ)
+    -- Sort by original values to cluster duplicates.
+    <<< sortBy (p `on` snd)
+    -- Add indices so we can recover original order after deduplicating.
+    <<< addIndexReverse
+
 -- | Remove duplicate elements from a list.
 -- | Keeps the first occurrence of each element in the input list,
 -- | in the same order they appear in the input list.
@@ -860,7 +880,10 @@ foldM f b (a : as) = f b a >>= \b' -> foldM f b' as
 -- |
 -- | Running time: `O(n)`
 mapReverse :: forall a b. (a -> b) -> List a -> List b
-mapReverse f = go Nil
+mapReverse f l = reverse $ map f l
+
+mapReverse2 :: forall a b. (a -> b) -> List a -> List b
+mapReverse2 f = go Nil
   where
   go :: List b -> List a -> List b
   go acc Nil = acc
@@ -876,7 +899,10 @@ mapReverse f = go Nil
 -- |
 -- | Running time: `O(n)`
 addIndexReverse :: forall a. List a -> List (Tuple Int a)
-addIndexReverse = go 0 Nil
+addIndexReverse = reverse <<< mapWithIndex Tuple
+
+addIndexReverse2 :: forall a. List a -> List (Tuple Int a)
+addIndexReverse2 = go 0 Nil
   where
   go :: Int -> List (Tuple Int a) -> List a -> List (Tuple Int a)
   go i acc Nil = acc
