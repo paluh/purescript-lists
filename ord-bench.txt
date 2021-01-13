@@ -1,0 +1,89 @@
+
+> @ bench /home/miles/projects/purescript/lists
+> npm run bench:build && npm run bench:run
+
+
+> @ bench:build /home/miles/projects/purescript/lists
+> purs compile 'bench/**/*.purs' 'src/**/*.purs' 'bower_components/*/src/**/*.purs'
+
+
+> @ bench:run /home/miles/projects/purescript/lists
+> node --expose-gc -e 'require("./output/Bench.Main/index.js").main()'
+
+List
+====
+---
+nub: list (0 elems)
+mean   = 2.70 μs
+stddev = 12.89 μs
+min    = 1.86 μs
+max    = 408.97 μs
+---
+nub: list (1 elems)
+mean   = 4.98 μs
+stddev = 17.62 μs
+min    = 2.23 μs
+max    = 345.65 μs
+---
+nub: list (10 elems)
+mean   = 32.42 μs
+stddev = 101.53 μs
+min    = 9.90 μs
+max    = 2.13 ms
+---
+nub: list (100 elems)
+mean   = 24.00 μs
+stddev = 31.89 μs
+min    = 17.52 μs
+max    = 633.34 μs
+---
+nub: list (1000 elems)
+mean   = 199.99 μs
+stddev = 238.56 μs
+min    = 159.75 μs
+max    = 4.56 ms
+---
+nub: list (10000 elems)
+mean   = 2.08 ms
+stddev = 1.42 ms
+min    = 1.69 ms
+max    = 34.16 ms
+---
+nub: list (100000 elems)
+/home/miles/projects/purescript/lists/output/Data.List/index.js:215
+                            return as(new Data_List_Types.Cons(a, ys));
+                                      ^
+
+RangeError: Maximum call stack size exceeded
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:39)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+    at $tco_var_as (/home/miles/projects/purescript/lists/output/Data.List/index.js:215:36)
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! @ bench:run: `node --expose-gc -e 'require("./output/Bench.Main/index.js").main()'`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the @ bench:run script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+npm WARN Local package.json exists, but node_modules missing, did you mean to install?
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/miles/.npm/_logs/2021-01-13T05_09_16_012Z-debug.log
+npm ERR! code ELIFECYCLE
+npm ERR! errno 1
+npm ERR! @ bench: `npm run bench:build && npm run bench:run`
+npm ERR! Exit status 1
+npm ERR! 
+npm ERR! Failed at the @ bench script.
+npm ERR! This is probably not a problem with npm. There is likely additional logging output above.
+npm WARN Local package.json exists, but node_modules missing, did you mean to install?
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/miles/.npm/_logs/2021-01-13T05_09_16_029Z-debug.log
