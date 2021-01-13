@@ -3,7 +3,7 @@ module Bench.Data.List where
 import Prelude
 import Data.Foldable (maximum)
 import Data.Int (pow)
-import Data.List (List(..), take, range, foldr, length)
+import Data.List (List(..), take, range, foldr, length, nub)
 import Data.Maybe (fromMaybe)
 import Data.Traversable (traverse_)
 import Effect (Effect)
@@ -12,8 +12,9 @@ import Performance.Minibench (bench)
 
 benchList :: Effect Unit
 benchList = do
-  benchLists "map" $ map (_ + 1)
-  benchLists "foldr" $ foldr add 0
+  --benchLists "map" $ map (_ + 1)
+  --benchLists "foldr" $ foldr add 0
+  benchLists "nub" nub
 
   where
 
